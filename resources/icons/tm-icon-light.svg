@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<svg width="512" height="512" >
+  <rect x="0" y="0" height="512" width="512" fill="#D1D2D3"/>
+  <g id="#diamond">
+    <path d="M288,224 L256,32Z L480,256Z L256,480Z L32,256"
+      stroke="#777" stroke-width="6" fill="none"/>
+    <path d="M256,32 L480,256 L256,480 L32,256Z"
+      stroke="#555" stroke-width="8" fill="none"/>
+    <path d="M224,288 L256,32Z L480,256Z L256,480Z L32,256"
+      stroke="#444" stroke-width="10" fill="none"/>
+  </g>
+</svg>
