@@ -1,0 +1,8 @@
+# Scripts
+*.bat
+
+# Dependencies NPM
+node_modules/
+
+# Truth Mines
+dist/
