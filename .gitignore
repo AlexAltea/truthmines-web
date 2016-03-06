@@ -1,7 +1,12 @@
 # Scripts
 *.bat
 
-# Dependencies NPM
+# TypeScript
+.tscache
+.baseDir.ts
+typings
+
+# Dependencies
 node_modules/
 
 # Truth Mines

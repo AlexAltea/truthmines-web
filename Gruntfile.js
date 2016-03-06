@@ -20,11 +20,36 @@ module.exports = function (grunt) {
                 cwd: '<%= path.app %>/',
                 src: ['**/*.html', '**/*.jpg'],
                 dest: '<%= path.dist %>/'
+            },
+            externals: {
+                expand: true,
+                flatten: true,
+                src: [
+                    'node_modules/angular2/bundles/angular2.dev.js',
+                    'node_modules/angular2/bundles/angular2-polyfills.js',
+                    'node_modules/angular2/bundles/router.dev.js',
+                    'node_modules/es6-shim/es6-shim.min.js',
+                    'node_modules/rxjs/bundles/Rx.js',
+                    'node_modules/systemjs/dist/system.src.js',
+                    'node_modules/systemjs/dist/system-polyfills.js'
+                ],
+                dest: '<%= path.dist %>/externals'
             }
         },
-        wiredep: {
-            app: {
-                src: ['<%= path.dist %>/index.html']
+        ts: {
+            base: {
+                src: ['<%= path.app %>/scripts/**/*.ts'],
+                dest: '<%= path.dist %>/app/',
+                options: {
+                    target: "es5",
+                    module: "system",
+                    moduleResolution: "node",
+                    sourceMap: true,
+                    emitDecoratorMetadata: true,
+                    experimentalDecorators: true,
+                    removeComments: false,
+                    noImplicitAny: false
+                }
             }
         },
         cssmin: {
@@ -50,18 +75,6 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        uglify: {
-            dist: {
-                options: {
-                    mangle: false
-                },
-                files: {
-                    '<%= path.dist %>/truthmines.js': [
-                        '<%= path.app %>/scripts/**/*.js'
-                    ]
-                }
-            }
-        },
         connect: {
             options: {
                 port: 9000,
@@ -77,8 +90,8 @@ module.exports = function (grunt) {
         },
         watch: {
             scripts: {
-                files: '<%= path.app %>/scripts/**/*.js',
-                tasks: ['uglify']
+                files: '<%= path.app %>/scripts/**/*.ts',
+                tasks: ['ts']
             },
             styles: {
                 files: '<%= path.app %>/styles/**/*.css',
@@ -86,7 +99,7 @@ module.exports = function (grunt) {
             },
             views: {
                 files: '<%= path.app %>/**/*.html',
-                tasks: ['copy', 'wiredep', 'htmlmin']
+                tasks: ['copy', 'htmlmin']
             },
             livereload: {
                 files: [
@@ -106,10 +119,9 @@ module.exports = function (grunt) {
     ]);
     grunt.registerTask('build', [
         'copy',
-        'wiredep',
+        'ts',
         'cssmin',
         'htmlmin',
-        'uglify'
     ]);
     grunt.registerTask('serve', [
         'connect',
