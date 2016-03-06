@@ -1,6 +1,9 @@
 # Scripts
 *.bat
 
+# Visual Studio Code
+.vscode
+
 # TypeScript
 .tscache
 .baseDir.ts
